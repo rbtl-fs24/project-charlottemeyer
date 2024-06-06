@@ -25,22 +25,20 @@ The data was collected through a survey containing 18 questions. The questionnai
 
 # Results
 
-In the scenario 1, the behavior towards waste disposal after adding a time constriant was investigated for different pursued degrees. In @fig-time-constraint, the likelihood between 1 and 5 that the participants would change their behavior towards not recycling their waste if there is a time constraint was analysed. Amongst the participants who would recycle the waste from their lunch, a majority are rather likely to not recycle anymore if there is a time constraint due to an imminent lecture or meeting.
+In the scenario 1, the behavior towards waste disposal after adding a time constaint was investigated for different pursued degrees. In @fig-time-constraint, the likelihood between 1 and 5 that the participants would change their behavior towards not recycling their waste if there is a time constraint was analysed. Amongst the participants who would recycle the waste from their lunch, a majority are rather likely to not recycle anymore if there is a time constraint due to an imminent lecture or meeting.
 
 ```{r}
 #| label: fig-time-constraint
-#| fig-cap: Likelihood of behavioral change in a time-contrained situation grouped by current degree pursued
+#| fig-cap: Likelihood of behavioral change in a time-contrained situation
 #| fig-width: 6
 
 # load libraries and data ------------------------------
-
+getwd()
 library(readr)
 library(tidyverse)
 library(ggplot2)
 library(ggthemes)
 library(gt)
-
-#read_csv("../")
 
 waste_disposal_behavior <- read_csv("/cloud/project/data/processed/influence_environment_behavior_waste_disposal_processed.csv")
 
@@ -78,16 +76,6 @@ In scenario 2 and 3, the participants were asked how they would dispose of their
 #| label: fig-nature-vs-city
 #| fig-cap: Comparison of waste disposal location when in nature or in the city
 #| fig-width: 6
-
-# load libraries and data ------------------------------
-
-library(readr)
-library(tidyverse)
-library(ggplot2)
-library(ggthemes)
-library(gt)
-
-waste_disposal_behavior <- read_csv("/cloud/project/data/processed/influence_environment_behavior_waste_disposal_processed.csv")
 
 # data analysis ---------------------------------------
 
@@ -136,17 +124,8 @@ write_csv(waste_disposal_behavior_fig2, "/cloud/project/data/final/fig1_nature_v
 
 ```{r}
 #| label: tbl-habits-before-after
-#| fig-cap: Mean values for evaluation of behavior towards waste disposal at the start and at the end of the survey
-#| fig-width: 6
-
-# load libraries ------------------------------
-
-library(readr)
-library(tidyverse)
-library(ggplot2)
-library(ggthemes)
-library(gt)
-
+#| tbl-cap: Mean values for evaluation of behavior towards waste disposal at the start and at the end of the survey
+#| tbl-width: 6
 
 # data analysis ---------------------------------------
 
@@ -161,9 +140,7 @@ waste_disposal_behavior_tbl <- waste_disposal_behavior |>
 # results display as table ---------------------------
 
 waste_disposal_behavior_tbl |> 
-    gt() |> 
-    tab_header(title = "Mean values for self-evaluation of behavior towards waste disposal at the start and at the end of the survey",
-               subtitle = "Data from 19 participants") |>
+    gt() |>
   fmt_number(-n, decimals = 2) |> 
     cols_label(age_range = "Age",
                mean_start = "Mean at start",
@@ -172,8 +149,7 @@ waste_disposal_behavior_tbl |>
                sd_end = "SD at end") |> 
   tab_options(
     data_row.padding = px(3),
-    heading.background.color = "#A2D1CC",
-    column_labels.background.color = "#508F88"
+    column_labels.background.color = "#A2D1CC"
   )
 
 # save data underlying the table ----------------------
@@ -183,7 +159,15 @@ write_csv(waste_disposal_behavior_tbl, "/cloud/project/data/final/tbl_habits_sta
 
 # Conclusions
 
-Based on the survey, the behavior of the participants towards waste disposal is changing depending on the situation. A time constraint seems to decrease the willingness to recycle properly. The behavior is also changing depending on the environment, as suggested by the comparison between recycling attitudes in nature or in the city, with a slightly better recycling in nature. Putting people in different fictional scenarios has an influence on the perception of their own recycling habits. This study shows that the environmental factors seems to influence how people recycle, but future studies are required to confirm the link between environmental factors and waste disposal behavior.
+-   behavior of the participants towards waste disposal changes depending on the fictional situation
+
+-   time constraint decreases willingness to recycle properly
+
+-   slightly better recycling in nature compared to in the city.
+
+-   putting people in different fictional scenarios influences perception of their own recycling habits
+
+-   environmental factors seems to influence how people recycle, but future studies needed to confirm link between environmental factors and waste disposal behavior
 
 # References
 

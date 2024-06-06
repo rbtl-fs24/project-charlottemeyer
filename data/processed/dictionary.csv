@@ -1,0 +1,21 @@
+variable_name;description
+id;number of the participant
+date;date of data collection
+age_range;age range of the participant
+native_language;native language(s) of the participant
+current_degree;current degree pursued by the participant
+recycling_habits_starts;self-evaluation of recycling habits from 1 (bad) to 5 (good) at the beginning of the survey
+waste_reduction_action;actions already taken to reduce waste
+lunch_recycling_yesno;if yes or no the participant recycle something from the waste of the lunch
+lunch_recycling_items;items that the participant recycles after the lunch
+lunch_recycling_littleTime;how likely from 1 (very unlikely) to 5 (very likely) it is that the behavior changes if there is a time constraint to the recycling
+hike_recycling_location;location where the participant leaves their waste on a hike
+hike_recycling_chipsBag;how likely from 1 (very unlikely) to 5 (very likely) it is that the participant picks up the chips bag on the trail
+hike_recycling_chipsBag_why;factors on which the participant bases their choice to pick up the chips bag or not
+limmat_recycling_location;location where the participant leaves their waste at the Limmat
+limmat_behavior_friends_reaction;how likely from 1 (very unlikely) to 5 (very likely) it is that the participant tells their friends to recycle
+limmat_recycling_plasticBottle;how likely from 1 (very unlikely) to 5 (very likely) it is that the participant picks up the plastic bottle on the street
+limmat_recycling_plasticBottle_why;factors on which the participant bases their choice to pick up the plastic bottle or not
+recycling_habits_end;self-evaluation of recycling habits from 1 (bad) to 5 (good) at the end of the survey
+recycling_habits_improvements;what the participant wants to implement in their life to improve their behavior towards waste disposal
+feedback;feedback on the survey

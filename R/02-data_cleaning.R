@@ -27,9 +27,6 @@ colnames(waste_disposal_behavior_date_ID) <- variable_names
 waste_disposal_behavior_date_ID_correctedOrder <- waste_disposal_behavior_date_ID |> 
   relocate(lunch_recycling_littleTime, .before = hike_recycling_location)
 
-##make the multiple choices in one additional column for each choice by counting
-##the number of "," in the initial column or with the "case_when" function
-
 waste_disposal_behavior_clean <- waste_disposal_behavior_date_ID_correctedOrder
 
 write_csv(waste_disposal_behavior_clean, "data/processed/influence_environment_behavior_waste_disposal_processed.csv")

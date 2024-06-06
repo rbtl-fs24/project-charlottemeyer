@@ -2,7 +2,7 @@
 
 ## General information
 
-1.  Title of Dataset:  
+1.  Title of Dataset:  waste-disposal-behavior
 
 2.  Author Information
 
@@ -37,14 +37,14 @@
 
 1.  Description of methods used for collection/generation of data: survey
 
-2.  Methods for processing the data: 
+2.  Methods for processing the data: R
 
 3.  Instrument- or software-specific information needed to interpret the
     data: -
 
 4.  Standards and calibration information, if appropriate: -
 
-5.  Environmental/experimental conditions: 
+5.  Environmental/experimental conditions: -
 
 6.  Describe any quality-assurance procedures performed on the data: -
 
