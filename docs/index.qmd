@@ -1,26 +1,191 @@
 ---
-title: "index"
-format: html
+title: "Situation-dependent changes of behavior towards waste disposal"
+author: "Charlotte Meyer"
+date: today
+format:
+  html:
+    embed-resources: true
+    toc: true
+bibliography: ../bibliography.bib
+csl: ../apa.csl
 editor: visual
+execute:
+  warning: false
+editor_options: 
+  chunk_output_type: console
 ---
 
-## Quarto
+# Introduction
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+Throwing out plastic bottles, cans, packaging, and so on is a common part of our daily life, and is influenced by multiple factors. Previous studies investigated the impact of knowldege (@babaei2015household), socio-demographic factors (@chikowore2021factors), as well as uncommon situation such as the COVID-19 pandemic (@yousefi2021municipal) on waste disposal behavior. However, studies linking the behavior of an individual within specific environments are limited. In this context, the present study investigates the potential change of behavior amongst students at ETH Zürich in the three following scenarios: waste disposal with a time constraint, after an afternoon at the Limmat, and during a hike.
 
-## Running Code
+# Methods
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+The data was collected through a survey containing 18 questions. The questionnaire was divided in 6 parts, namely demographics, waste disposal habits, scenario 1, scenario 2, scenario 3, and reflection. In the scenario 1, the questions were related to changes in waste disposal behavior in case of a time constraint. In scenario 2, the participants had to imagine their behavior towards waste disposal after an afternoon at the Limmat. Scenario 3 contained questions related to waste disposal during a hike. 19 ETH Zürich students participated to the survey.
 
-```{r}
-1 + 1
-```
+# Results
 
-You can add options to executable code like this
+In the scenario 1, the behavior towards waste disposal after adding a time constriant was investigated for different pursued degrees. In @fig-time-constraint, the likelihood between 1 and 5 that the participants would change their behavior towards not recycling their waste if there is a time constraint was analysed. Amongst the participants who would recycle the waste from their lunch, a majority are rather likely to not recycle anymore if there is a time constraint due to an imminent lecture or meeting.
 
 ```{r}
-#| echo: false
-2 * 2
+#| label: fig-time-constraint
+#| fig-cap: Likelihood of behavioral change in a time-contrained situation grouped by current degree pursued
+#| fig-width: 6
+
+# load libraries and data ------------------------------
+
+library(readr)
+library(tidyverse)
+library(ggplot2)
+library(ggthemes)
+library(gt)
+
+#read_csv("../")
+
+waste_disposal_behavior <- read_csv("/cloud/project/data/processed/influence_environment_behavior_waste_disposal_processed.csv")
+
+# data analysis ---------------------------------------
+
+waste_disposal_behavior_fig1 <- waste_disposal_behavior |> 
+  filter(lunch_recycling_yesno == "Yes") |> 
+  select(current_degree, lunch_recycling_littleTime)
+
+# results display as figure ---------------------------
+
+ggplot(data=waste_disposal_behavior_fig1,
+       mapping=aes(x=lunch_recycling_littleTime, fill=current_degree)) +
+  geom_bar() +
+  scale_fill_manual(values=palette("Set2")) +
+  labs(x="Likelihood of behavioral change",
+       y="Count") +
+   theme_minimal() +
+   theme(title=element_text(size=20),
+        axis.title.x=element_text(size=20),
+        axis.title.y=element_text(size=20),
+        axis.text=element_text(size=20),
+        legend.position=c(0.2,0.8),
+        legend.text=element_text(size=20),
+        legend.title=element_blank())
+
+# save data underlying the figure ----------------------
+
+write_csv(waste_disposal_behavior_fig1, "/cloud/project/data/final/fig1_time_constraint.csv")
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+In scenario 2 and 3, the participants were asked how they would dispose of their waste in nature and in the city, respectively. In @fig-nature-vs-city, the comparison between the scenario in nature and in the city shows that the participants tend to recycle their waste at a recyling station slightly more when they are in nature than when they are in the city. To establish a clear link between the environment and the waste disposal behavior, further investigation is required.
+
+```{r}
+#| label: fig-nature-vs-city
+#| fig-cap: Comparison of waste disposal location when in nature or in the city
+#| fig-width: 6
+
+# load libraries and data ------------------------------
+
+library(readr)
+library(tidyverse)
+library(ggplot2)
+library(ggthemes)
+library(gt)
+
+waste_disposal_behavior <- read_csv("/cloud/project/data/processed/influence_environment_behavior_waste_disposal_processed.csv")
+
+# data analysis ---------------------------------------
+
+waste_disposal_behavior_fig2 <- waste_disposal_behavior |>
+  pivot_longer(cols = c(hike_recycling_location, limmat_recycling_location),
+               names_to = "environment",
+               values_to = "recycling_location") |> 
+  mutate(nature_vs_city = factor(case_when(
+         environment == "hike_recycling_location" ~ "Nature",
+         environment == "limmat_recycling_location" ~ "City",
+         .default = "Other"
+     ))) |>
+  mutate(trash_type = case_when(
+         recycling_location == "Proper recycling in Zürich or at home" ~ "Recycling station",
+         recycling_location == "Regular trash at the car or at the closest train station" ~ "Regular trash",
+         recycling_location == "Leaving everything in nature" ~ "Left behind",
+         recycling_location == "Leaving everything there on the grass" ~ "Left behind",
+         recycling_location == "Closest regular trash at the Limmat" ~ "Regular trash",
+         recycling_location == "Proper recycling station a bit further" ~ "Recycling station",
+        .default = "Other"
+     )) |>
+  select(nature_vs_city, trash_type)
+
+# results display as figure ---------------------------
+
+ggplot(data=waste_disposal_behavior_fig2,
+       mapping=aes(x=nature_vs_city, fill=trash_type)) +
+  geom_bar() +
+  scale_fill_manual(values=palette("Set2")) +
+  labs(x="Environment",
+       y="Count") +
+   theme_minimal() +
+   theme(title=element_text(size=20),
+        axis.title.x=element_text(size=20),
+        axis.title.y=element_text(size=20),
+        axis.text=element_text(size=20),
+        legend.text=element_text(size=20),
+        legend.title=element_blank())
+
+# save data underlying the figure ----------------------
+
+write_csv(waste_disposal_behavior_fig2, "/cloud/project/data/final/fig1_nature_vs_city.csv")
+```
+
+@tbl-habits-before-after shows a comparison between the self-evaluated waste disposal behavior of the participants on a scale from 1 (bad) to 5 (good) at the beginning and at the end of the survey grouped by age range. For the participants between 18 to 24 years old, the means are slightly lower, while the participants between 25 and 30 years old showed a slight increase. This suggests a decrease or reinforcement, respectively, of appreciation in their waste disposal behavior. The participant between 31 and 35 years old had no variation between the start and the end of the survey.
+
+```{r}
+#| label: tbl-habits-before-after
+#| fig-cap: Mean values for evaluation of behavior towards waste disposal at the start and at the end of the survey
+#| fig-width: 6
+
+# load libraries ------------------------------
+
+library(readr)
+library(tidyverse)
+library(ggplot2)
+library(ggthemes)
+library(gt)
+
+
+# data analysis ---------------------------------------
+
+waste_disposal_behavior_tbl <- waste_disposal_behavior |> 
+  group_by(age_range) |> 
+  summarise(mean_start = mean(recycling_habits_start),
+            sd_start = sd(recycling_habits_start),
+            mean_end = mean(recycling_habits_end),
+            sd_end = sd(recycling_habits_end),
+            n = n())
+
+# results display as table ---------------------------
+
+waste_disposal_behavior_tbl |> 
+    gt() |> 
+    tab_header(title = "Mean values for self-evaluation of behavior towards waste disposal at the start and at the end of the survey",
+               subtitle = "Data from 19 participants") |>
+  fmt_number(-n, decimals = 2) |> 
+    cols_label(age_range = "Age",
+               mean_start = "Mean at start",
+               sd_start = "SD at start",
+               mean_end = "Mean at end",
+               sd_end = "SD at end") |> 
+  tab_options(
+    data_row.padding = px(3),
+    heading.background.color = "#A2D1CC",
+    column_labels.background.color = "#508F88"
+  )
+
+# save data underlying the table ----------------------
+
+write_csv(waste_disposal_behavior_tbl, "/cloud/project/data/final/tbl_habits_start_end_survey.csv")
+```
+
+# Conclusions
+
+Based on the survey, the behavior of the participants towards waste disposal is changing depending on the situation. A time constraint seems to decrease the willingness to recycle properly. The behavior is also changing depending on the environment, as suggested by the comparison between recycling attitudes in nature or in the city, with a slightly better recycling in nature. Putting people in different fictional scenarios has an influence on the perception of their own recycling habits. This study shows that the environmental factors seems to influence how people recycle, but future studies are required to confirm the link between environmental factors and waste disposal behavior.
+
+# References
+
+::: {#refs}
+:::
