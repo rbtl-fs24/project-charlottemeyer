@@ -33,7 +33,7 @@ In the scenario 1, the behavior towards waste disposal after adding a time const
 #| fig-width: 6
 
 # load libraries and data ------------------------------
-getwd()
+
 library(readr)
 library(tidyverse)
 library(ggplot2)
